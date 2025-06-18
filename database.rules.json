@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "notes": {
+      "$uid": {
+        // Hanya user yang ter-auth dengan UID yang sama yang boleh baca
+        ".read":  "auth != null && auth.uid == $uid",
+        // Hanya user yang ter-auth dengan UID yang sama yang boleh tulis
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    }
+  }
+}
