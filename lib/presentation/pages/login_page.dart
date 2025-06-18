@@ -1,18 +1,21 @@
 // lib/presentation/pages/login_page.dart
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/auth_manager.dart';
+import '../providers/auth_provider.dart';
+import '../theme/app_theme.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  final VoidCallback onSwitchToRegister;
+  const LoginPage({Key? key, required this.onSwitchToRegister}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -22,110 +25,100 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  String? _validateEmail(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Email wajib diisi';
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthProvider>().signIn(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
     }
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-    if (!emailRegex.hasMatch(value.trim())) {
-      return 'Format email tidak valid';
-    }
-    return null;
-  }
-
-  String? _validatePassword(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Password wajib diisi';
-    }
-    if (value.length < 6) {
-      return 'Password minimal 6 karakter';
-    }
-    return null;
   }
 
   @override
   Widget build(BuildContext context) {
-    final authManager = context.read<AuthManager>();
+    final authProvider = context.watch<AuthProvider>();
+
+    // Listener untuk error
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (authProvider.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(authProvider.error!), backgroundColor: Colors.red),
+        );
+        authProvider.clearError();
+      }
+    });
 
     return Scaffold(
-      appBar: AppBar(
-        title: Consumer<AuthManager>(
-          builder: (ctx, auth, _) =>
-              Text(auth.isLogin ? 'Login' : 'Register'),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                    labelText: 'Email', border: OutlineInputBorder()),
-                keyboardType: TextInputType.emailAddress,
-                validator: _validateEmail,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                    labelText: 'Password', border: OutlineInputBorder()),
-                validator: _validatePassword,
-              ),
-              const SizedBox(height: 30),
-              Consumer<AuthManager>(
-                builder: (ctx, auth, child) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    if (auth.error != null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(auth.error!)),
-                      );
-                      auth.clearError();
-                    }
-                  });
-
-                  return auth.loading
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        final email = _emailController.text.trim();
-                        final password = _passwordController.text.trim();
-
-                        if (auth.isLogin) {
-                          await authManager.login(email, password);
-                        } else {
-                          await authManager.register(email, password);
-                        }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'KantinKU',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.tomatoRed,
                     ),
-                    child: Text(
-                      auth.isLogin ? 'Login' : 'Register',
-                      style: const TextStyle(fontSize: 18),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              Consumer<AuthManager>(builder: (ctx, auth, _) {
-                return TextButton(
-                  onPressed: authManager.toggleAuthMode,
-                  child: Text(
-                    auth.isLogin
-                        ? 'Belum punya akun? Daftar'
-                        : 'Sudah punya akun? Login',
-                    style: const TextStyle(fontSize: 16),
                   ),
-                );
-              }),
-            ],
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Selamat Datang Kembali!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, color: AppTheme.warmBrown),
+                  ),
+                  const SizedBox(height: 40),
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(labelText: 'Email'),
+                    validator: (value) =>
+                    value!.isEmpty ? 'Email tidak boleh kosong' : null,
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    validator: (value) =>
+                    value!.length < 6 ? 'Password minimal 6 karakter' : null,
+                  ),
+                  const SizedBox(height: 32),
+                  authProvider.isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : ElevatedButton(
+                    onPressed: _login,
+                    child: const Text('MASUK'),
+                  ),
+                  const SizedBox(height: 24),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Belum punya akun? ',
+                        style: const TextStyle(color: AppTheme.warmBrown),
+                        children: [
+                          TextSpan(
+                            text: 'Daftar',
+                            style: const TextStyle(
+                              color: AppTheme.orangePeel,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = widget.onSwitchToRegister,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

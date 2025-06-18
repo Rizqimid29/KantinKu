@@ -1,60 +1,56 @@
 // lib/data/repositories/auth_repository_impl.dart
-import 'package:firebase_auth/firebase_auth.dart';
-import '../../domain/entities/user.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../domain/entities/app_user.dart';
 import '../../domain/repositories/auth_repository.dart';
-
-// data/repositories/auth_repository_impl.dart
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
-import '../../domain/repositories/auth_repository.dart';
-import '../../domain/entities/user.dart'; // UserEntity Anda
 
 class AuthRepositoryImpl implements AuthRepository {
-  final FirebaseAuth _firebaseAuth;
+  final firebase.FirebaseAuth _firebaseAuth;
+  final FirebaseFirestore _firestore;
 
-  AuthRepositoryImpl({FirebaseAuth? firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  AuthRepositoryImpl({firebase.FirebaseAuth? firebaseAuth, FirebaseFirestore? firestore})
+      : _firebaseAuth = firebaseAuth ?? firebase.FirebaseAuth.instance,
+        _firestore = firestore ?? FirebaseFirestore.instance;
 
   @override
-  Stream<UserEntity?> get authStateChanges {
-    // Mengubah Stream<User> dari Firebase menjadi Stream<UserEntity>
-
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
-      if (firebaseUser == null) {
-        return null;
-      }
-      return UserEntity.fromFirebaseUser(firebaseUser);
-    });
+  Stream<firebase.User?> get authStateChanges {
+    return _firebaseAuth.authStateChanges();
   }
 
   @override
-  Future<UserEntity?> signIn(String email, String password) async {
+  Future<firebase.User?> signIn(String email, String password) async {
     try {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      if (userCredential.user != null) {
-        return UserEntity.fromFirebaseUser(userCredential.user!);
-      }
-      return null;
-    } on FirebaseAuthException catch (e) {
-      // Tangani exception Firebase Auth, mungkin ubah menjadi exception domain
+      return userCredential.user;
+    } on firebase.FirebaseAuthException catch (e) {
       throw Exception(e.message ?? 'Login failed');
     }
   }
 
   @override
-  Future<UserEntity?> signUp(String email, String password) async {
+  Future<void> signUp(String fullName, String username, String email, String password) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      if (userCredential.user != null) {
-        return UserEntity.fromFirebaseUser(userCredential.user!);
+      final firebaseUser = userCredential.user;
+      if (firebaseUser != null) {
+        // Buat objek AppUser dan simpan ke Firestore
+        final newUser = AppUser(
+          uid: firebaseUser.uid,
+          email: email,
+          fullName: fullName,
+          username: username,
+        );
+        await _firestore.collection('users').doc(newUser.uid).set(newUser.toMap());
+      } else {
+        throw Exception('Sign up failed: User not created.');
       }
-      return null;
-    } on FirebaseAuthException catch (e) {
+    } on firebase.FirebaseAuthException catch (e) {
       throw Exception(e.message ?? 'Sign up failed');
     }
   }
@@ -64,35 +60,3 @@ class AuthRepositoryImpl implements AuthRepository {
     await _firebaseAuth.signOut();
   }
 }
-
-
-// class AuthRepositoryImpl implements AuthRepository {
-//   final FirebaseAuth _auth = FirebaseAuth.instance;
-//
-//   @override
-//   Future<UserEntity?> signIn(String email, String password) async {
-//     final cred = await _auth.signInWithEmailAndPassword(
-//         email: email, password: password);
-//     final user = cred.user;
-//     if (user != null) {
-//       return UserEntity(uid: user.uid, email: user.email!);
-//     }
-//     return null;
-//   }
-//
-//   @override
-//   Future<UserEntity?> signUp(String email, String password) async {
-//     final cred = await _auth.createUserWithEmailAndPassword(
-//         email: email, password: password);
-//     final user = cred.user;
-//     if (user != null) {
-//       return UserEntity(uid: user.uid, email: user.email!);
-//     }
-//     return null;
-//   }
-//
-//   @override
-//   Future<void> signOut() async {
-//     return _auth.signOut();
-//   }
-// }
