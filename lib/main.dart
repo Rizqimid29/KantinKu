@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'presentation/providers/search_provider.dart';
 
 import 'firebase_options.dart';
 import 'data/repositories/auth_repository_impl.dart';
@@ -9,7 +10,7 @@ import 'data/repositories/canteen_repository_impl.dart';
 import 'domain/repositories/auth_repository.dart';
 import 'domain/repositories/canteen_repository.dart';
 import 'presentation/pages/onboarding_page.dart';
-// UBAH IMPORT DI SINI
+
 import 'presentation/providers/auth_provider.dart';
 import 'presentation/providers/home_provider.dart';
 import 'presentation/providers/profile_provider.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => HomeProvider(ctx.read<CanteenRepository>()),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => SearchProvider(ctx.read<CanteenRepository>()),
         ),
       ],
       child: MaterialApp(

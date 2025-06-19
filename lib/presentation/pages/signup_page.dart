@@ -60,9 +60,9 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     // GANTI DI SINI
-    final authProvider = context.watch<AuthViewModel>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      final authProvider = context.read<AuthViewModel>();
       if (authProvider.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(authProvider.error!), backgroundColor: Colors.red),
@@ -123,11 +123,15 @@ class _SignUpPageState extends State<SignUpPage> {
                     value!.length < 6 ? 'Password minimal 6 karakter' : null,
                   ),
                   const SizedBox(height: 32),
-                  authProvider.isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ElevatedButton(
-                    onPressed: _signUp,
-                    child: const Text('DAFTAR'),
+                  Consumer<AuthViewModel>(
+                    builder: (context, authProvider, child) {
+                      return authProvider.isLoading
+                          ? const Center(child: CircularProgressIndicator())
+                          : ElevatedButton(
+                        onPressed: _signUp, // Fungsi _signUp tidak perlu diubah
+                        child: const Text('DAFTAR'),
+                      );
+                    },
                   ),
                   const SizedBox(height: 24),
                   Center(

@@ -35,8 +35,14 @@ class HomeProvider extends ChangeNotifier {
       ]);
       _faculties = results[0] as List<String>;
       _bestSellers = results[1] as List<Product>;
+
+      print('DEBUG: Jumlah Fakultas Ditemukan: ${_faculties.length}');
+      print('DEBUG: Data Fakultas: $_faculties');
+      print('DEBUG: Jumlah Best Seller Ditemukan: ${_bestSellers.length}');
+
     } catch (e) {
       _error = "Gagal memuat data: ${e.toString()}";
+      print('DEBUG: TERJADI ERROR SAAT FETCH DATA: $e');
     } finally {
       _isLoading = false;
       notifyListeners();
