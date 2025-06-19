@@ -2,6 +2,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// UBAH IMPORT DI SINI
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 
@@ -27,7 +28,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      context.read<AuthProvider>().signIn(
+      // GANTI DI SINI
+      context.read<AuthViewModel>().signIn(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
@@ -36,9 +38,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.watch<AuthProvider>();
+    // GANTI DI SINI
+    final authProvider = context.watch<AuthViewModel>();
 
-    // Listener untuk error
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (authProvider.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -59,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  // ... (sisa UI sama)
                   const Text(
                     'KantinKU',
                     textAlign: TextAlign.center,

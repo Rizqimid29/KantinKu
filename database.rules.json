@@ -1,12 +1,24 @@
 {
   "rules": {
-    "notes": {
+    "users": {
       "$uid": {
-        // Hanya user yang ter-auth dengan UID yang sama yang boleh baca
-        ".read":  "auth != null && auth.uid == $uid",
-        // Hanya user yang ter-auth dengan UID yang sama yang boleh tulis
+        // Hanya user yang login yang bisa membaca data user lain
+        ".read": "auth != null",
+        // Hanya user pemilik akun yang bisa menulis datanya
         ".write": "auth != null && auth.uid == $uid"
       }
+    },
+    "faculties": {
+      // Siapa saja yang sudah login bisa membaca daftar fakultas
+      ".read": "auth != null",
+      // Tulis data hanya dari konsol admin
+      ".write": false
+    },
+    "products": {
+      // Siapa saja yang sudah login bisa membaca daftar produk
+      ".read": "auth != null",
+      // Tulis data hanya dari konsol admin
+      ".write": false
     }
   }
 }

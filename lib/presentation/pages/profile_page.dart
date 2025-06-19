@@ -1,6 +1,7 @@
 // lib/presentation/pages/profile_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// UBAH IMPORT DI SINI
 import '../providers/auth_provider.dart';
 import '../providers/profile_provider.dart';
 import '../theme/app_theme.dart';
@@ -16,9 +17,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    // Panggil fetchUserDetails saat halaman pertama kali dibuka
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final authProvider = context.read<AuthProvider>();
+      // GANTI DI SINI
+      final authProvider = context.read<AuthViewModel>();
       if (authProvider.user != null) {
         context.read<ProfileProvider>().fetchUserDetails(authProvider.user!.uid);
       }
@@ -27,7 +28,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final authProvider = context.watch<AuthProvider>();
+    // GANTI DI SINI
+    final authProvider = context.watch<AuthViewModel>();
     final profileProvider = context.watch<ProfileProvider>();
 
     return Scaffold(
@@ -41,6 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
             : Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // ... (sisa UI sama)
             const CircleAvatar(
               radius: 50,
               backgroundColor: AppTheme.warmBrown,
