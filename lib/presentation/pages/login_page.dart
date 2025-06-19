@@ -7,7 +7,8 @@ import '../theme/app_theme.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback onSwitchToRegister;
-  const LoginPage({Key? key, required this.onSwitchToRegister}) : super(key: key);
+  const LoginPage({Key? key, required this.onSwitchToRegister})
+    : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -42,7 +43,10 @@ class _LoginPageState extends State<LoginPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (authProvider.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(authProvider.error!), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text(authProvider.error!),
+            backgroundColor: Colors.red,
+          ),
         );
         authProvider.clearError();
       }
@@ -79,36 +83,34 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'Email'),
                     validator: (value) =>
-                    value!.isEmpty ? 'Email tidak boleh kosong' : null,
+                        value!.isEmpty ? 'Email tidak boleh kosong' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (value) =>
-                    value!.length < 6 ? 'Password minimal 6 karakter' : null,
+                    validator: (value) => value!.length < 6
+                        ? 'Password minimal 6 karakter'
+                        : null,
                   ),
                   const SizedBox(height: 32),
                   authProvider.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
-                    onPressed: _login,
-                    child: const Text('MASUK'),
-                  ),
+                          onPressed: _login,
+                          child: const Text('MASUK'),
+                        ),
                   const SizedBox(height: 24),
                   Center(
                     child: RichText(
                       text: TextSpan(
                         text: 'Belum punya akun? ',
-                        style: const TextStyle(color: AppTheme.warmBrown),
+                        style: const TextStyle(color: Colors.black),
                         children: [
                           TextSpan(
                             text: 'Daftar',
-                            style: const TextStyle(
-                              color: AppTheme.orangePeel,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: const TextStyle(color: AppTheme.tomatoRed),
                             recognizer: TapGestureRecognizer()
                               ..onTap = widget.onSwitchToRegister,
                           ),
