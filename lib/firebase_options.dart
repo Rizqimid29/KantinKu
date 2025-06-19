@@ -27,10 +27,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -43,48 +40,47 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAuwn3a0trR5-SioeYg8n_2eUhFn2ZHQvA',
+    appId: '1:439399746037:web:d041206a231a13295b38bc',
+    messagingSenderId: '439399746037',
+    projectId: 'kantinku-project',
+    authDomain: 'kantinku-project.firebaseapp.com',
+    storageBucket: 'kantinku-project.firebasestorage.app',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBVD3l74MlqYz3SgjMkr4ADAknapNeRZbs',
-    appId: '1:478173913017:android:3be5fa942eee8d617ea068',
-    messagingSenderId: '478173913017',
-    projectId: 'belajarauth-80153',
-    databaseURL: 'https://belajarauth-80153-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'belajarauth-80153.firebasestorage.app',
+    apiKey: 'AIzaSyDf7sVPyKIoKS1HdOFjngD1AKzs-oluoUE',
+    appId: '1:439399746037:android:593bcb69a57ed2d35b38bc',
+    messagingSenderId: '439399746037',
+    projectId: 'kantinku-project',
+    storageBucket: 'kantinku-project.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCWr7ZXO0XLaSMTYcLW_F3hZOb6wYzKU2M',
-    appId: '1:478173913017:ios:afc6f67ec9c94dce7ea068',
-    messagingSenderId: '478173913017',
-    projectId: 'belajarauth-80153',
-    databaseURL: 'https://belajarauth-80153-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'belajarauth-80153.firebasestorage.app',
-    androidClientId: '478173913017-pffgl3m3sd9h45a53nf2fq687q5cch46.apps.googleusercontent.com',
-    iosClientId: '478173913017-c9oq249h45css21ava6nqjl6904ob1bk.apps.googleusercontent.com',
+    apiKey: 'AIzaSyChQstum-JYvB7Jkq5kmLFZZlIw7JYYI-k',
+    appId: '1:439399746037:ios:e6cd4de704e452d65b38bc',
+    messagingSenderId: '439399746037',
+    projectId: 'kantinku-project',
+    storageBucket: 'kantinku-project.firebasestorage.app',
     iosBundleId: 'com.example.belajarfirebase',
-  );
-
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCtsbzM4OoTtU8VKd00d7kQ9sb20It_mxA',
-    appId: '1:478173913017:web:b81f103a346b635f7ea068',
-    messagingSenderId: '478173913017',
-    projectId: 'belajarauth-80153',
-    authDomain: 'belajarauth-80153.firebaseapp.com',
-    databaseURL: 'https://belajarauth-80153-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'belajarauth-80153.firebasestorage.app',
-    measurementId: 'G-MGE4P5B0NR',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCWr7ZXO0XLaSMTYcLW_F3hZOb6wYzKU2M',
-    appId: '1:478173913017:ios:afc6f67ec9c94dce7ea068',
-    messagingSenderId: '478173913017',
-    projectId: 'belajarauth-80153',
-    databaseURL: 'https://belajarauth-80153-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'belajarauth-80153.firebasestorage.app',
-    androidClientId: '478173913017-pffgl3m3sd9h45a53nf2fq687q5cch46.apps.googleusercontent.com',
-    iosClientId: '478173913017-c9oq249h45css21ava6nqjl6904ob1bk.apps.googleusercontent.com',
+    apiKey: 'AIzaSyChQstum-JYvB7Jkq5kmLFZZlIw7JYYI-k',
+    appId: '1:439399746037:ios:e6cd4de704e452d65b38bc',
+    messagingSenderId: '439399746037',
+    projectId: 'kantinku-project',
+    storageBucket: 'kantinku-project.firebasestorage.app',
     iosBundleId: 'com.example.belajarfirebase',
   );
 
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAuwn3a0trR5-SioeYg8n_2eUhFn2ZHQvA',
+    appId: '1:439399746037:web:31175fcd8d6adbfe5b38bc',
+    messagingSenderId: '439399746037',
+    projectId: 'kantinku-project',
+    authDomain: 'kantinku-project.firebaseapp.com',
+    storageBucket: 'kantinku-project.firebasestorage.app',
+  );
 }

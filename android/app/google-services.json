@@ -1,124 +1,26 @@
 {
   "project_info": {
-    "project_number": "478173913017",
-    "firebase_url": "https://belajarauth-80153-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "belajarauth-80153",
-    "storage_bucket": "belajarauth-80153.firebasestorage.app"
+    "project_number": "439399746037",
+    "project_id": "kantinku-project",
+    "storage_bucket": "kantinku-project.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:478173913017:android:0cbead767ab083ac7ea068",
-        "android_client_info": {
-          "package_name": "com.example.belajarauth"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "478173913017-pffgl3m3sd9h45a53nf2fq687q5cch46.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.belajarauth",
-            "certificate_hash": "577fadc99880f716f5ebb1a5c89467010693af84"
-          }
-        },
-        {
-          "client_id": "478173913017-6v7ilfhgrqogbfdo7hukg2q5b0o7pp0a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBVD3l74MlqYz3SgjMkr4ADAknapNeRZbs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "478173913017-6v7ilfhgrqogbfdo7hukg2q5b0o7pp0a.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "478173913017-c9oq249h45css21ava6nqjl6904ob1bk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.belajarfirebase"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:478173913017:android:3be5fa942eee8d617ea068",
+        "mobilesdk_app_id": "1:439399746037:android:593bcb69a57ed2d35b38bc",
         "android_client_info": {
           "package_name": "com.example.belajarfirebase"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "478173913017-6v7ilfhgrqogbfdo7hukg2q5b0o7pp0a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBVD3l74MlqYz3SgjMkr4ADAknapNeRZbs"
+          "current_key": "AIzaSyDf7sVPyKIoKS1HdOFjngD1AKzs-oluoUE"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "478173913017-6v7ilfhgrqogbfdo7hukg2q5b0o7pp0a.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "478173913017-c9oq249h45css21ava6nqjl6904ob1bk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.belajarfirebase"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:478173913017:android:924858599da0df9c7ea068",
-        "android_client_info": {
-          "package_name": "com.example.myapplication"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "478173913017-6v7ilfhgrqogbfdo7hukg2q5b0o7pp0a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBVD3l74MlqYz3SgjMkr4ADAknapNeRZbs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "478173913017-6v7ilfhgrqogbfdo7hukg2q5b0o7pp0a.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "478173913017-c9oq249h45css21ava6nqjl6904ob1bk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.belajarfirebase"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
