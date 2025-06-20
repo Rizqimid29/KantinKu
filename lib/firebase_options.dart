@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'kantinku-project.firebaseapp.com',
     storageBucket: 'kantinku-project.firebasestorage.app',
   );
+
 }

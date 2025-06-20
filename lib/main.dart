@@ -34,7 +34,10 @@ class MyApp extends StatelessWidget {
         Provider<AuthRepository>(create: (_) => authRepository),
         Provider<CanteenRepository>(create: (_) => canteenRepository),
         ChangeNotifierProvider(
-          create: (ctx) => AuthProvider(ctx.read<AuthRepository>()),
+          create: (ctx) => AuthProvider(
+            ctx.read<AuthRepository>(),
+            ctx.read<CanteenRepository>(), // <-- Perubahan di sini
+          ),
         ),
         ChangeNotifierProvider(
           create: (ctx) => ProfileProvider(ctx.read<CanteenRepository>()),
