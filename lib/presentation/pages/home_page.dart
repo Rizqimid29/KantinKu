@@ -1,9 +1,11 @@
+// lib/presentation/pages/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/search_provider.dart';
 import '../theme/app_theme.dart';
 import '../../domain/entities/product.dart';
+import 'best_seller_page.dart'; // <-- Import baru
 import 'search_result_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -80,9 +82,8 @@ class _HomePageState extends State<HomePage> {
 
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder:
-            (context) =>
-                SearchResultPage(selectedFaculties: _selectedFaculties),
+        builder: (context) =>
+            SearchResultPage(selectedFaculties: _selectedFaculties),
       ),
     );
   }
@@ -109,7 +110,14 @@ class _HomePageState extends State<HomePage> {
               children: [
                 _buildFacultyFilter(context, provider.faculties),
                 const SizedBox(height: 24),
-                _buildSectionHeader(context, 'Paling Laris 🔥', () {}),
+                // --- BAGIAN YANG DIUBAH ---
+                _buildSectionHeader(context, 'Paling Laris 🔥', () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const BestSellerPage(),
+                    ),
+                  );
+                }),
                 const SizedBox(height: 16),
                 _buildBestSellerList(provider.bestSellers),
                 const SizedBox(height: 24),
@@ -156,10 +164,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildSectionHeader(
-    BuildContext context,
-    String title,
-    VoidCallback onSeeAll,
-  ) {
+      BuildContext context,
+      String title,
+      VoidCallback onSeeAll,
+      ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -221,10 +229,10 @@ class ProductCard extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder:
                   (context, error, stackTrace) => Container(
-                    height: 120,
-                    color: Colors.grey[200],
-                    child: const Icon(Icons.broken_image, color: Colors.grey),
-                  ),
+                height: 120,
+                color: Colors.grey[200],
+                child: const Icon(Icons.broken_image, color: Colors.grey),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

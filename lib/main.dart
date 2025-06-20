@@ -1,6 +1,8 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'presentation/providers/best_seller_provider.dart'; // <-- Import baru
 import 'presentation/providers/search_provider.dart';
 
 import 'firebase_options.dart';
@@ -15,6 +17,7 @@ import 'presentation/providers/home_provider.dart';
 import 'presentation/providers/profile_provider.dart';
 import 'presentation/theme/app_theme.dart';
 import 'presentation/providers/popular_product_provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -36,7 +39,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) => AuthProvider(
             ctx.read<AuthRepository>(),
-            ctx.read<CanteenRepository>(), // <-- Perubahan di sini
+            ctx.read<CanteenRepository>(),
           ),
         ),
         ChangeNotifierProvider(
@@ -49,7 +52,12 @@ class MyApp extends StatelessWidget {
           create: (ctx) => SearchProvider(ctx.read<CanteenRepository>()),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => PopularProductProvider(ctx.read<CanteenRepository>()),
+          create: (ctx) =>
+              PopularProductProvider(ctx.read<CanteenRepository>()),
+        ),
+        // --- PROVIDER YANG DITAMBAHKAN ---
+        ChangeNotifierProvider(
+          create: (ctx) => BestSellerProvider(ctx.read<CanteenRepository>()),
         ),
       ],
       child: MaterialApp(

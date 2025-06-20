@@ -72,18 +72,33 @@ class CanteenRepositoryImpl implements CanteenRepository {
   @override
   Future<List<Product>> getPopularProducts() async {
     try {
-      // Query untuk mengambil produk dengan rating >= 4.7
       final snapshot = await _firestore
           .collection('products')
           .where('rating', isGreaterThanOrEqualTo: 4.7)
-          .orderBy('rating', descending: true) // Urutkan dari rating tertinggi
-          .limit(20) // Batasi hasilnya, misal 20 produk teratas
+          .orderBy('rating', descending: true)
+          .limit(20)
           .get();
       return snapshot.docs
           .map((doc) => Product.fromMap(doc.data(), doc.id))
           .toList();
     } catch (e) {
       throw Exception('Failed to get popular products: $e');
+    }
+  }
+
+  // --- FUNGSI YANG DITAMBAHKAN ---
+  @override
+  Future<List<Product>> getAllBestSellers() async {
+    try {
+      final snapshot = await _firestore
+          .collection('products')
+          .where('isBestSeller', isEqualTo: true)
+          .get();
+      return snapshot.docs
+          .map((doc) => Product.fromMap(doc.data(), doc.id))
+          .toList();
+    } catch (e) {
+      throw Exception('Failed to get all best sellers: $e');
     }
   }
 }
