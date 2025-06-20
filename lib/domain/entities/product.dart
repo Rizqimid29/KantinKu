@@ -1,4 +1,3 @@
-// lib/domain/entities/product.dart
 class Product {
   final String id;
   final String name;
@@ -6,7 +5,7 @@ class Product {
   final double rating;
   final String standName;
   final String facultyName;
-  final String imageUrl; // URL gambar produk
+  final String imageUrl;
 
   Product({
     required this.id,
@@ -26,7 +25,7 @@ class Product {
       rating: (data['rating'] ?? 0.0).toDouble(),
       standName: data['standName'] ?? 'Stand Tidak Tersedia',
       facultyName: data['facultyName'] ?? 'Fakultas Tidak Tersedia',
-      imageUrl: data['imageUrl'] ?? 'https://via.placeholder.com/150', // URL default
+      imageUrl: data['imageUrl'] ?? 'https://via.placeholder.com/150',
     );
   }
 }

@@ -1,14 +1,11 @@
-// lib/presentation/providers/auth_provider.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import '../../domain/repositories/auth_repository.dart';
 
-// GANTI NAMA CLASS DI SINI
-class AuthViewModel extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   final AuthRepository _authRepository;
 
-  // GANTI NAMA CONSTRUCTOR DI SINI
-  AuthViewModel(this._authRepository);
+  AuthProvider(this._authRepository);
 
   firebase.User? _user;
   firebase.User? get user => _user;
@@ -40,7 +37,12 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> signUp(String fullName, String username, String email, String password) async {
+  Future<bool> signUp(
+    String fullName,
+    String username,
+    String email,
+    String password,
+  ) async {
     _isLoading = true;
     _error = null;
     notifyListeners();

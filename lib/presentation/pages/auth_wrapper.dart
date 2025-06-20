@@ -1,4 +1,3 @@
-// lib/presentation/pages/auth_wrapper.dart
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
@@ -21,10 +20,8 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if (_showLoginPage) {
-      return LoginPage(onSwitchToRegister: toggleView);
-    } else {
-      return SignUpPage(onSwitchToLogin: toggleView);
-    }
+    return _showLoginPage
+        ? LoginPage(onSwitchToRegister: toggleView)
+        : SignUpPage(onSwitchToLogin: toggleView);
   }
 }

@@ -1,8 +1,7 @@
-// lib/presentation/pages/onboarding_page.dart
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
-import 'auth_gate.dart'; // Kita akan buat file ini
+import 'auth_gate.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     super.initState();
     Timer(
       const Duration(seconds: 3),
-          () => Navigator.of(context).pushReplacement(
+      () => Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const AuthGate()),
       ),
     );
@@ -31,7 +30,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Ganti dengan logo jika ada
             Icon(Icons.storefront, size: 100, color: AppTheme.tomatoRed),
             SizedBox(height: 24),
             Text(
@@ -45,10 +43,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             SizedBox(height: 8),
             Text(
               'Jelajahi Kantin UB Dengan Mudah',
-              style: TextStyle(
-                fontSize: 16,
-                color: AppTheme.warmBrown,
-              ),
+              style: TextStyle(fontSize: 16, color: AppTheme.warmBrown),
             ),
           ],
         ),

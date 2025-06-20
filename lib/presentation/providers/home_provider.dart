@@ -1,4 +1,3 @@
-// lib/presentation/providers/home_provider.dart
 import 'package:flutter/material.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/canteen_repository.dart';
@@ -7,7 +6,6 @@ class HomeProvider extends ChangeNotifier {
   final CanteenRepository _canteenRepository;
 
   HomeProvider(this._canteenRepository) {
-    // Langsung fetch data saat provider diinisialisasi
     fetchInitialData();
   }
 
@@ -28,7 +26,6 @@ class HomeProvider extends ChangeNotifier {
     _error = null;
     notifyListeners();
     try {
-      // Fetch data secara bersamaan
       final results = await Future.wait([
         _canteenRepository.getFaculties(),
         _canteenRepository.getBestSellers(),
@@ -39,7 +36,6 @@ class HomeProvider extends ChangeNotifier {
       print('DEBUG: Jumlah Fakultas Ditemukan: ${_faculties.length}');
       print('DEBUG: Data Fakultas: $_faculties');
       print('DEBUG: Jumlah Best Seller Ditemukan: ${_bestSellers.length}');
-
     } catch (e) {
       _error = "Gagal memuat data: ${e.toString()}";
       print('DEBUG: TERJADI ERROR SAAT FETCH DATA: $e');

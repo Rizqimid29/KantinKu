@@ -1,8 +1,6 @@
-// lib/presentation/pages/login_page.dart
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// UBAH IMPORT DI SINI
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
 
@@ -29,8 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _login() {
     if (_formKey.currentState!.validate()) {
-      // GANTI DI SINI
-      context.read<AuthViewModel>().signIn(
+      context.read<AuthProvider>().signIn(
         _emailController.text.trim(),
         _passwordController.text.trim(),
       );
@@ -39,8 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // GANTI DI SINI
-    final authProvider = context.watch<AuthViewModel>();
+    final authProvider = context.watch<AuthProvider>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (authProvider.error != null) {
@@ -65,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // ... (sisa UI sama)
                   const Text(
                     'KantinKU',
                     textAlign: TextAlign.center,
@@ -85,25 +80,28 @@ class _LoginPageState extends State<LoginPage> {
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Email tidak boleh kosong' : null,
+                    validator:
+                        (value) =>
+                            value!.isEmpty ? 'Email tidak boleh kosong' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (value) => value!.length < 6
-                        ? 'Password minimal 6 karakter'
-                        : null,
+                    validator:
+                        (value) =>
+                            value!.length < 6
+                                ? 'Password minimal 6 karakter'
+                                : null,
                   ),
                   const SizedBox(height: 32),
                   authProvider.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : ElevatedButton(
-                          onPressed: _login,
-                          child: const Text('MASUK'),
-                        ),
+                        onPressed: _login,
+                        child: const Text('MASUK'),
+                      ),
                   const SizedBox(height: 24),
                   Center(
                     child: RichText(
@@ -114,8 +112,9 @@ class _LoginPageState extends State<LoginPage> {
                           TextSpan(
                             text: 'Daftar',
                             style: const TextStyle(color: AppTheme.tomatoRed),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = widget.onSwitchToRegister,
+                            recognizer:
+                                TapGestureRecognizer()
+                                  ..onTap = widget.onSwitchToRegister,
                           ),
                         ],
                       ),

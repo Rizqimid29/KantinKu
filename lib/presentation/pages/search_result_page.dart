@@ -1,4 +1,3 @@
-// lib/presentation/pages/search_result_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/search_provider.dart';
@@ -8,19 +7,24 @@ import '../../domain/entities/product.dart';
 class SearchResultPage extends StatefulWidget {
   final List<String> selectedFaculties;
 
-  const SearchResultPage({Key? key, required this.selectedFaculties}) : super(key: key);
+  const SearchResultPage({Key? key, required this.selectedFaculties})
+    : super(key: key);
 
   @override
   State<SearchResultPage> createState() => _SearchResultPageState();
 }
 
-class _SearchResultPageState extends State<SearchResultPage> with SingleTickerProviderStateMixin {
+class _SearchResultPageState extends State<SearchResultPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: widget.selectedFaculties.length, vsync: this);
+    _tabController = TabController(
+      length: widget.selectedFaculties.length,
+      vsync: this,
+    );
   }
 
   @override
@@ -37,7 +41,10 @@ class _SearchResultPageState extends State<SearchResultPage> with SingleTickerPr
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
-          tabs: widget.selectedFaculties.map((faculty) => Tab(text: faculty)).toList(),
+          tabs:
+              widget.selectedFaculties
+                  .map((faculty) => Tab(text: faculty))
+                  .toList(),
         ),
       ),
       body: Consumer<SearchProvider>(
@@ -52,20 +59,21 @@ class _SearchResultPageState extends State<SearchResultPage> with SingleTickerPr
 
           return TabBarView(
             controller: _tabController,
-            children: widget.selectedFaculties.map((faculty) {
-              final products = provider.groupedProducts[faculty] ?? [];
-              if (products.isEmpty) {
-                return Center(
-                  child: Text('Tidak ada produk ditemukan di $faculty'),
-                );
-              }
-              return ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  return ProductListItem(product: products[index]);
-                },
-              );
-            }).toList(),
+            children:
+                widget.selectedFaculties.map((faculty) {
+                  final products = provider.groupedProducts[faculty] ?? [];
+                  if (products.isEmpty) {
+                    return Center(
+                      child: Text('Tidak ada produk ditemukan di $faculty'),
+                    );
+                  }
+                  return ListView.builder(
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      return ProductListItem(product: products[index]);
+                    },
+                  );
+                }).toList(),
           );
         },
       ),
@@ -73,9 +81,9 @@ class _SearchResultPageState extends State<SearchResultPage> with SingleTickerPr
   }
 }
 
-// Widget untuk menampilkan satu item produk di list
 class ProductListItem extends StatelessWidget {
   final Product product;
+
   const ProductListItem({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -94,8 +102,12 @@ class ProductListItem extends StatelessWidget {
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    Container(width: 80, height: 80, color: Colors.grey[200]),
+                errorBuilder:
+                    (context, error, stackTrace) => Container(
+                      width: 80,
+                      height: 80,
+                      color: Colors.grey[200],
+                    ),
               ),
             ),
             const SizedBox(width: 16),
@@ -103,16 +115,28 @@ class ProductListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(product.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(
+                    product.name,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   const SizedBox(height: 4),
-                  Text(product.standName, style: const TextStyle(color: Colors.grey)),
+                  Text(
+                    product.standName,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         'Rp ${product.price}',
-                        style: const TextStyle(color: AppTheme.tomatoRed, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          color: AppTheme.tomatoRed,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Row(
                         children: [
@@ -125,7 +149,7 @@ class ProductListItem extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
