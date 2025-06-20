@@ -1,11 +1,10 @@
-// lib/presentation/pages/home_page.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/home_provider.dart';
-import '../providers/search_provider.dart'; // Import provider baru
+import '../providers/search_provider.dart';
 import '../theme/app_theme.dart';
 import '../../domain/entities/product.dart';
-import 'search_result_page.dart'; // Import halaman baru
+import 'search_result_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,14 +14,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Simpan daftar fakultas yang dipilih
   final List<String> _selectedFaculties = [];
 
   void _showFacultySelectionDialog(List<String> allFaculties) {
     showDialog(
       context: context,
       builder: (context) {
-        // Gunakan StatefulBuilder agar dialog bisa update state
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
@@ -79,19 +76,17 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    // Panggil provider untuk melakukan pencarian
     context.read<SearchProvider>().searchProducts(_selectedFaculties);
 
-    // Navigasi ke halaman hasil
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SearchResultPage(selectedFaculties: _selectedFaculties),
+        builder:
+            (context) =>
+                SearchResultPage(selectedFaculties: _selectedFaculties),
       ),
     );
   }
 
-
-  // Sisa kodenya sama, hanya buildFacultyFilter yang diubah
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,11 +107,9 @@ class _HomePageState extends State<HomePage> {
             child: ListView(
               padding: const EdgeInsets.all(16.0),
               children: [
-                _buildFacultyFilter(context, provider.faculties), // Bagian ini yang diubah
+                _buildFacultyFilter(context, provider.faculties),
                 const SizedBox(height: 24),
-                _buildSectionHeader(context, 'Paling Laris 🔥', () {
-                  // TODO: Navigasi ke halaman semua best seller
-                }),
+                _buildSectionHeader(context, 'Paling Laris 🔥', () {}),
                 const SizedBox(height: 16),
                 _buildBestSellerList(provider.bestSellers),
                 const SizedBox(height: 24),
@@ -128,7 +121,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // UBAH FUNGSI INI
   Widget _buildFacultyFilter(BuildContext context, List<String> faculties) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,14 +128,14 @@ class _HomePageState extends State<HomePage> {
         const Text(
           'Mau cari di fakultas mana?',
           style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.warmBrown),
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.warmBrown,
+          ),
         ),
         const SizedBox(height: 12),
         ElevatedButton.icon(
           onPressed: () {
-            // Panggil dialog saat tombol ditekan
             if (faculties.isNotEmpty) {
               _showFacultySelectionDialog(faculties);
             } else {
@@ -158,28 +150,28 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppTheme.orangePeel,
             minimumSize: const Size(double.infinity, 50),
           ),
-        )
+        ),
       ],
     );
   }
-  // Sisa fungsi _buildSectionHeader dan _buildBestSellerList tetap sama
-  // ...
+
   Widget _buildSectionHeader(
-      BuildContext context, String title, VoidCallback onSeeAll) {
+    BuildContext context,
+    String title,
+    VoidCallback onSeeAll,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           title,
           style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppTheme.warmBrown),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppTheme.warmBrown,
+          ),
         ),
-        TextButton(
-          onPressed: onSeeAll,
-          child: const Text('Lihat Semua'),
-        ),
+        TextButton(onPressed: onSeeAll, child: const Text('Lihat Semua')),
       ],
     );
   }
@@ -227,11 +219,12 @@ class ProductCard extends StatelessWidget {
               height: 120,
               width: double.infinity,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                height: 120,
-                color: Colors.grey[200],
-                child: const Icon(Icons.broken_image, color: Colors.grey),
-              ),
+              errorBuilder:
+                  (context, error, stackTrace) => Container(
+                    height: 120,
+                    color: Colors.grey[200],
+                    child: const Icon(Icons.broken_image, color: Colors.grey),
+                  ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

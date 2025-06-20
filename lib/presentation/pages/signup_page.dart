@@ -1,11 +1,8 @@
-// lib/presentation/pages/signup_page.dart
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// UBAH IMPORT DI SINI
 import '../providers/auth_provider.dart';
 import '../theme/app_theme.dart';
-
 
 class SignUpPage extends StatefulWidget {
   final VoidCallback onSwitchToLogin;
@@ -16,13 +13,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  // ... (controllers sama)
   final _fullNameController = TextEditingController();
   final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
 
   @override
   void dispose() {
@@ -33,11 +28,9 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-
   void _signUp() async {
     if (_formKey.currentState!.validate()) {
-      // GANTI DI SINI
-      final authProvider = context.read<AuthViewModel>();
+      final authProvider = context.read<AuthProvider>();
       final success = await authProvider.signUp(
         _fullNameController.text.trim(),
         _usernameController.text.trim(),
@@ -59,13 +52,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    // GANTI DI SINI
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final authProvider = context.read<AuthViewModel>();
+      final authProvider = context.read<AuthProvider>();
       if (authProvider.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(authProvider.error!), backgroundColor: Colors.red),
+          SnackBar(
+            content: Text(authProvider.error!),
+            backgroundColor: Colors.red,
+          ),
         );
         authProvider.clearError();
       }
@@ -73,7 +67,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return Scaffold(
       body: SafeArea(
-        // ... (sisa UI sama)
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24.0),
@@ -95,42 +88,52 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(height: 40),
                   TextFormField(
                     controller: _fullNameController,
-                    decoration: const InputDecoration(labelText: 'Nama Lengkap'),
-                    validator: (value) =>
-                    value!.isEmpty ? 'Nama tidak boleh kosong' : null,
+                    decoration: const InputDecoration(
+                      labelText: 'Nama Lengkap',
+                    ),
+                    validator:
+                        (value) =>
+                            value!.isEmpty ? 'Nama tidak boleh kosong' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _usernameController,
                     decoration: const InputDecoration(labelText: 'Username'),
-                    validator: (value) =>
-                    value!.isEmpty ? 'Username tidak boleh kosong' : null,
+                    validator:
+                        (value) =>
+                            value!.isEmpty
+                                ? 'Username tidak boleh kosong'
+                                : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'Email'),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) =>
-                    value!.isEmpty ? 'Email tidak boleh kosong' : null,
+                    validator:
+                        (value) =>
+                            value!.isEmpty ? 'Email tidak boleh kosong' : null,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (value) =>
-                    value!.length < 6 ? 'Password minimal 6 karakter' : null,
+                    validator:
+                        (value) =>
+                            value!.length < 6
+                                ? 'Password minimal 6 karakter'
+                                : null,
                   ),
                   const SizedBox(height: 32),
-                  Consumer<AuthViewModel>(
+                  Consumer<AuthProvider>(
                     builder: (context, authProvider, child) {
                       return authProvider.isLoading
                           ? const Center(child: CircularProgressIndicator())
                           : ElevatedButton(
-                        onPressed: _signUp, // Fungsi _signUp tidak perlu diubah
-                        child: const Text('DAFTAR'),
-                      );
+                            onPressed: _signUp,
+                            child: const Text('DAFTAR'),
+                          );
                     },
                   ),
                   const SizedBox(height: 24),
@@ -146,8 +149,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               color: AppTheme.orangePeel,
                               fontWeight: FontWeight.bold,
                             ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = widget.onSwitchToLogin,
+                            recognizer:
+                                TapGestureRecognizer()
+                                  ..onTap = widget.onSwitchToLogin,
                           ),
                         ],
                       ),

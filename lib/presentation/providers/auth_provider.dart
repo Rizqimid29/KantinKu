@@ -1,14 +1,14 @@
-// lib/presentation/providers/auth_provider.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import '../../domain/repositories/auth_repository.dart';
+import '../../domain/repositories/canteen_repository.dart'; // <-- Import baru
 
-// GANTI NAMA CLASS DI SINI
-class AuthViewModel extends ChangeNotifier {
+class AuthProvider extends ChangeNotifier {
   final AuthRepository _authRepository;
+  final CanteenRepository _canteenRepository; // <-- Tambahkan repository
 
-  // GANTI NAMA CONSTRUCTOR DI SINI
-  AuthViewModel(this._authRepository);
+  // Perbarui konstruktor
+  AuthProvider(this._authRepository, this._canteenRepository);
 
   firebase.User? _user;
   firebase.User? get user => _user;
@@ -18,6 +18,16 @@ class AuthViewModel extends ChangeNotifier {
 
   String? _error;
   String? get error => _error;
+
+  // Fungsi baru untuk validasi
+  Future<bool> validateUserDocumentExists(String uid) async {
+    try {
+      await _canteenRepository.getUserDetails(uid);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   void updateUser(firebase.User? newUser) {
     if (_user != newUser) {
@@ -40,7 +50,12 @@ class AuthViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> signUp(String fullName, String username, String email, String password) async {
+  Future<bool> signUp(
+      String fullName,
+      String username,
+      String email,
+      String password,
+      ) async {
     _isLoading = true;
     _error = null;
     notifyListeners();

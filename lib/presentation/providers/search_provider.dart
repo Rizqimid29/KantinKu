@@ -1,4 +1,3 @@
-// lib/presentation/providers/search_provider.dart
 import 'package:flutter/material.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/repositories/canteen_repository.dart';
@@ -14,7 +13,6 @@ class SearchProvider extends ChangeNotifier {
   String? _error;
   String? get error => _error;
 
-  // Kita simpan hasil dalam bentuk Map<NamaFakultas, List<Produk>>
   Map<String, List<Product>> _groupedProducts = {};
   Map<String, List<Product>> get groupedProducts => _groupedProducts;
 
@@ -23,18 +21,18 @@ class SearchProvider extends ChangeNotifier {
 
     _isLoading = true;
     _error = null;
-    _groupedProducts = {}; // Kosongkan hasil sebelumnya
+    _groupedProducts = {};
     notifyListeners();
 
     try {
-      // Panggil repository untuk mendapatkan semua produk dari fakultas yg dipilih
-      final allProducts = await _canteenRepository.searchProductsByFaculties(facultyNames);
+      final allProducts = await _canteenRepository.searchProductsByFaculties(
+        facultyNames,
+      );
 
-      // Kelompokkan hasil berdasarkan nama fakultas
       for (var faculty in facultyNames) {
-        _groupedProducts[faculty] = allProducts.where((p) => p.facultyName == faculty).toList();
+        _groupedProducts[faculty] =
+            allProducts.where((p) => p.facultyName == faculty).toList();
       }
-
     } catch (e) {
       _error = "Gagal mencari produk: ${e.toString()}";
     } finally {

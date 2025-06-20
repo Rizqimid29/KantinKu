@@ -1,4 +1,3 @@
-// lib/presentation/providers/profile_provider.dart
 import 'package:flutter/material.dart';
 import '../../domain/entities/app_user.dart';
 import '../../domain/repositories/canteen_repository.dart';

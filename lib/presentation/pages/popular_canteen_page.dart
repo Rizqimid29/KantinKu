@@ -1,4 +1,3 @@
-// lib/presentation/pages/popular_canteen_page.dart
 import 'package:flutter/material.dart';
 
 class PopularCanteenPage extends StatelessWidget {

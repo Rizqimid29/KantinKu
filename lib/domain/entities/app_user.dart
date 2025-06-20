@@ -1,4 +1,3 @@
-// lib/domain/entities/app_user.dart
 class AppUser {
   final String uid;
   final String email;
@@ -12,7 +11,6 @@ class AppUser {
     required this.username,
   });
 
-  // Factory constructor untuk membuat AppUser dari map (data Firestore)
   factory AppUser.fromMap(Map<String, dynamic> data, String uid) {
     return AppUser(
       uid: uid,
@@ -22,12 +20,7 @@ class AppUser {
     );
   }
 
-  // Method untuk mengubah AppUser menjadi map (untuk disimpan ke Firestore)
   Map<String, dynamic> toMap() {
-    return {
-      'email': email,
-      'fullName': fullName,
-      'username': username,
-    };
+    return {'email': email, 'fullName': fullName, 'username': username};
   }
 }
