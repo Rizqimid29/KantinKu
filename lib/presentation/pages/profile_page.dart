@@ -12,10 +12,29 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // initState() DIHAPUS dari sini
+  // --- TAMBAHKAN BAGIAN INI ---
+  @override
+  void initState() {
+    super.initState();
+    // Gunakan addPostFrameCallback untuk memastikan context sudah siap
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Ambil UID pengguna yang sedang login dari AuthProvider
+      final authProvider = context.read<AuthProvider>();
+      final user = authProvider.user;
+
+      // Jika ada user yang login, fetch datanya
+      if (user != null) {
+        // Panggil fetchUserDetails dari ProfileProvider
+        context.read<ProfileProvider>().fetchUserDetails(user.uid);
+      }
+    });
+  }
+  // --- BATAS PENAMBAHAN ---
+
 
   @override
   Widget build(BuildContext context) {
+    // ... sisa kode build method Anda tidak perlu diubah ...
     final authProvider = context.watch<AuthProvider>();
     final profileProvider = context.watch<ProfileProvider>();
 
