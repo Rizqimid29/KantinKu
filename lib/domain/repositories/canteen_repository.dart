@@ -17,4 +17,5 @@ abstract class CanteenRepository {
 
   // Mencari produk berdasarkan filter fakultas
   Future<List<Product>> searchProductsByFaculties(List<String> facultyNames);
+  Future<List<Product>> getPopularProducts();
 }
