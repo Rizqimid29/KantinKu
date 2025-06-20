@@ -14,7 +14,7 @@ import 'presentation/providers/auth_provider.dart';
 import 'presentation/providers/home_provider.dart';
 import 'presentation/providers/profile_provider.dart';
 import 'presentation/theme/app_theme.dart';
-
+import 'presentation/providers/popular_product_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -47,6 +47,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => SearchProvider(ctx.read<CanteenRepository>()),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PopularProductProvider(ctx.read<CanteenRepository>()),
         ),
       ],
       child: MaterialApp(
